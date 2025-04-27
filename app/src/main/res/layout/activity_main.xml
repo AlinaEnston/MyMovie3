@@ -67,7 +67,7 @@
         app:layout_constraintBottom_toTopOf="@+id/main_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         android:autoLink="web"
-        android:textColorLink="#E5DEEB"
+        android:textColorLink="#E0DCE6"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -80,6 +80,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topAppBar"
         app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintHeight_percent="0.5"
         tools:listitem="@layout/film_item" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

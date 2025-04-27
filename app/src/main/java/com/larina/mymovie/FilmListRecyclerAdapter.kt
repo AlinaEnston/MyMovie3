@@ -1,11 +1,11 @@
+package com.larina.mymovie
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.larina.mymovie.Film
-import com.larina.mymovie.R
 
 class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<FilmListRecyclerAdapter.FilmViewHolder>() {
 

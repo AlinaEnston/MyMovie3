@@ -1,6 +1,6 @@
 package com.larina.mymovie
 
-import FilmListRecyclerAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
             Film("La La Land", R.drawable.poster_1, "When Sebastian, a pianist...")
         )
 
+
         // Инициализация RecyclerView
         recyclerView = findViewById(R.id.main_recycler) // Инициализация RecyclerView
 
@@ -92,6 +93,13 @@ class MainActivity : AppCompatActivity() {
             })
             // Присваиваем адаптер
             adapter = filmsAdapter
+            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener{
+                override fun click(film: Film) {
+                    //Запускаем наше активити
+                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                    startActivity(intent)
+                }
+            })
             // Присваиваем LayoutManager
             layoutManager = LinearLayoutManager(this@MainActivity)
             // Применяем декоратор для отступов
