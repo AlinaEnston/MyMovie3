@@ -1,39 +1,53 @@
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.larina.mymovie.Film
-import com.larina.mymovie.FilmViewHolder
 import com.larina.mymovie.R
 
-class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<FilmViewHolder>() {
-    private val items = mutableListOf<Film>() // Список элементов
+class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<FilmListRecyclerAdapter.FilmViewHolder>() {
 
-    // Возвращает количество элементов в списке
-    override fun getItemCount() = items.size
+    private val films = mutableListOf<Film>()
 
-    // Создает новый ViewHolder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false)
-        return FilmViewHolder(view)
+    interface OnItemClickListener {
+        fun click(film: Film)
     }
 
-    // Привязывает данные к ViewHolder
-    override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
-        holder.bind(items[position]) // Привязываем данные
-        holder.itemView.setOnClickListener {
-            clickListener.click(items[position]) // Обработка клика
+    class FilmViewHolder(itemView: View, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
+        private val poster: ImageView = itemView.findViewById(R.id.poster)
+        private val title: TextView = itemView.findViewById(R.id.title)
+        private val description: TextView = itemView.findViewById(R.id.description)
+
+        fun bind(film: Film) {
+            // Убедитесь, что posterResId - это Int
+            poster.setImageResource(film.posterResId)
+            title.text = film.title
+            description.text = film.description
+
+            itemView.setOnClickListener {
+                listener.click(film)
+            }
         }
     }
 
-    // Метод для добавления элементов в список
-    fun addItems(list: List<Film>) {
-        items.clear() // Очищаем текущий список
-        items.addAll(list) // Добавляем новые элементы
-        notifyDataSetChanged() // Уведомляем адаптер об изменениях
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false)
+        return FilmViewHolder(view, listener)
     }
 
-    // Интерфейс для обработки кликов
-    interface OnItemClickListener {
-        fun click(film: Film)
+    override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
+        holder.bind(films[position])
+    }
+
+    override fun getItemCount(): Int {
+        return films.size
+    }
+
+    fun addItems(newFilms: List<Film>) {
+        films.clear()
+        films.addAll(newFilms)
+        notifyDataSetChanged()
     }
 }

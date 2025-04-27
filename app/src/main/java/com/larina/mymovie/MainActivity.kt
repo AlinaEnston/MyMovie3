@@ -66,10 +66,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Инициализация RecyclerView
-        recyclerView = findViewById(R.id.main_recycler) // Инициализация RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this) // Установка LayoutManager
-
         // Данные для RecyclerView
         val filmsDataBase = listOf(
             Film("Aladdin", R.drawable.poster_8, "Aladdin, a kind thief..."),
@@ -82,18 +78,23 @@ class MainActivity : AppCompatActivity() {
             Film("La La Land", R.drawable.poster_1, "When Sebastian, a pianist...")
         )
 
-        // Инициализация адаптера
-        filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
-            override fun click(film: Film) {
-                // Обработка клика по фильму
-                Toast.makeText(this@MainActivity, "Clicked: ${film.title}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        // Инициализация RecyclerView
+        recyclerView = findViewById(R.id.main_recycler) // Инициализация RecyclerView
 
         // Применение адаптера и других настроек к RecyclerView
         recyclerView.apply {
+            // Инициализируем наш адаптер в конструктор передаем анонимно инициализированный интерфейс
+            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
+                override fun click(film: Film) {
+                    // Обработка клика по фильму
+                    Toast.makeText(this@MainActivity, "Clicked: ${film.title}", Toast.LENGTH_SHORT).show()
+                }
+            })
+            // Присваиваем адаптер
             adapter = filmsAdapter
+            // Присваиваем LayoutManager
             layoutManager = LinearLayoutManager(this@MainActivity)
+            // Применяем декоратор для отступов
             addItemDecoration(TopSpacingItemDecoration(8))
         }
 

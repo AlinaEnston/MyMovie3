@@ -10,18 +10,14 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/top_container"
-        android:layout_width="344dp"
-        android:layout_height="164dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="156dp"
+        android:layout_width="305dp"
+        android:layout_height="115dp"
         android:elevation="5dp"
         app:cardBackgroundColor="#487C4DFF"
         app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/disclaimer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imageView5"
@@ -32,42 +28,59 @@
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
+            android:layout_width="238dp"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/poster_2" />
 
         <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitEnd"
             app:srcCompat="@drawable/poster_4" />
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="359dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/poster_9" />
+
     </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/top_container">
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginBottom="292dp"
-        app:layout_constraintBottom_toTopOf="@+id/top_container"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:menu="@menu/top_app_bar"
         app:navigationIcon="@android:drawable/ic_menu_sort_by_size"
         app:title="MyMovie"
         app:titleTextColor="@color/black" />
+
+    <TextView
+        android:id="@+id/disclaimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Постеры:https://www.movieposters.com/"
+        app:layout_constraintBottom_toTopOf="@+id/main_recycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:autoLink="web"
+        android:textColorLink="#E5DEEB"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_recycler"
+        android:layout_width="355dp"
+        android:layout_height="398dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/film_item" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -79,37 +92,7 @@
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/menu2" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="290dp"
-        android:layout_height="31dp"
-        android:autoLink="web"
-        android:background="#00D5A1A1"
-        android:fontFamily="sans-serif"
-        android:linksClickable="true"
-        android:text="Постеры https://www.movieposters.com/"
-        android:textColor="#140C0C"
-        android:textColorLink="#F1FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="287dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_recycler"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/film_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
