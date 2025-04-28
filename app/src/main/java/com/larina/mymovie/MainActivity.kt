@@ -1,5 +1,6 @@
 package com.larina.mymovie
 
+import FilmListRecyclerAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -78,7 +79,6 @@ class MainActivity : AppCompatActivity() {
             Film("La La Land", R.drawable.poster_1, "When Sebastian, a pianist...")
         )
 
-
         // Инициализация RecyclerView
         recyclerView = findViewById(R.id.main_recycler) // Инициализация RecyclerView
 
@@ -87,19 +87,17 @@ class MainActivity : AppCompatActivity() {
             // Инициализируем наш адаптер в конструктор передаем анонимно инициализированный интерфейс
             filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
                 override fun click(film: Film) {
-                    // Обработка клика по фильму
-                    Toast.makeText(this@MainActivity, "Clicked: ${film.title}", Toast.LENGTH_SHORT).show()
+                    // Запускаем DetailsActivity при нажатии на фильм
+                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                    // Передаем данные о фильме, если нужно
+                    intent.putExtra("film_title", film.title)
+                    intent.putExtra("film_description", film.description)
+                    intent.putExtra("film_poster", film.posterResId)
+                    startActivity(intent)
                 }
             })
             // Присваиваем адаптер
             adapter = filmsAdapter
-            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener{
-                override fun click(film: Film) {
-                    //Запускаем наше активити
-                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                    startActivity(intent)
-                }
-            })
             // Присваиваем LayoutManager
             layoutManager = LinearLayoutManager(this@MainActivity)
             // Применяем декоратор для отступов

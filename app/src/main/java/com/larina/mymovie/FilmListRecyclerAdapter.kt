@@ -1,11 +1,11 @@
-package com.larina.mymovie
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.larina.mymovie.Film
+import com.larina.mymovie.R
 
 class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<FilmListRecyclerAdapter.FilmViewHolder>() {
 
@@ -26,6 +26,7 @@ class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : Recyc
             title.text = film.title
             description.text = film.description
 
+            // Обработка нажатия на элемент
             itemView.setOnClickListener {
                 listener.click(film)
             }
@@ -38,6 +39,7 @@ class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : Recyc
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
+        // Передаем элемент в метод bind() ViewHolder
         holder.bind(films[position])
     }
 
