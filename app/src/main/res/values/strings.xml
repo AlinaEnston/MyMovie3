@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MyMovie</string>
+    <string name="hi">Оцени приложение</string>
+    <string name="image_description">Милый котик</string>
+
 </resources>

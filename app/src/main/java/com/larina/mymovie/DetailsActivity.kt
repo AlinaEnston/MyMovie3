@@ -3,10 +3,10 @@ package com.larina.mymovie
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import kotlinx.parcelize.Parcelize
+import android.os.Parcelable
+
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var detailsDescription: TextView
@@ -19,11 +19,17 @@ class DetailsActivity : AppCompatActivity() {
         detailsDescription = findViewById(R.id.details_description)
         detailsPoster = findViewById(R.id.details_poster)
 
-        val filmTitle = intent.getStringExtra("film_title")
-        val filmDescription = intent.getStringExtra("film_description")
-        val filmPosterResId = intent.getIntExtra("film_poster", 0)
+        // Получаем объект Film из Intent
+        val film: Film? = intent.getParcelableExtra("film")
 
-        detailsDescription.text = filmDescription ?: "Описание недоступно"
-        detailsPoster.setImageResource(if (filmPosterResId != 0) filmPosterResId else R.drawable.poster_1)
+        // Проверяем, что объект не null
+        film?.let {
+            detailsDescription.text = it.description
+            detailsPoster.setImageResource(it.poster)
+        } ?: run {
+            // Обработка случая, если фильм не был передан
+            detailsDescription.text = "Описание недоступно"
+            detailsPoster.setImageResource(R.drawable.poster_1)
+        }
     }
 }

@@ -22,7 +22,7 @@ class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : Recyc
 
         fun bind(film: Film) {
             // Убедитесь, что posterResId - это Int
-            poster.setImageResource(film.posterResId)
+            poster.setImageResource(film.poster)
             title.text = film.title
             description.text = film.description
 

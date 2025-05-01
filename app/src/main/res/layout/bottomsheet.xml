@@ -1,0 +1,27 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomsheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="70dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/color4"
+        android:gravity="center"
+        android:text="@string/hi"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:layout_width="433dp"
+        android:layout_height="235dp"
+        android:contentDescription="@string/image_description"
+        android:scaleType="fitCenter"
+        android:src="@drawable/i" />
+</LinearLayout>
