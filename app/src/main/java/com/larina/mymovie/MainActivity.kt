@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 if (fm.backStackEntryCount > 0) {
                     fm.popBackStack()
                 } else {
-                    Toast.makeText(this@MainActivity, "Показываю диалог выхода", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Выход", Toast.LENGTH_SHORT).show()
                     showExitConfirmationDialog()
                 }
             }
@@ -83,8 +83,12 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton("Нет") { dialog, _ ->
                 dialog.dismiss()
             }
-            .setCancelable(true)
+            .setNeutralButton("Не знаю") { _, _ ->
+                Toast.makeText(this, "Оставайся", Toast.LENGTH_SHORT).show()
+            }
             .show()
+            .setCancelable(true)
+
     }
     fun launchDetailsFragment(film: Film) {
         val detailsFragment = DetailsFragment()
