@@ -2,5 +2,7 @@
     <string name="app_name">MyMovie</string>
     <string name="hi">Оцени приложение</string>
     <string name="image_description">Милый котик</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="disclaimer">"Posters:https://www.movieposters.com/"</string>
 
 </resources>
