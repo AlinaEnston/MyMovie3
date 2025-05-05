@@ -51,8 +51,12 @@ class HomeFragment : Fragment() {
     }
 
     class YourBottomSheetFragment : BottomSheetDialogFragment() {
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            return inflater.inflate(R.layout.bottomsheet, container, false)
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            return inflater.inflate(R.layout.bottom_sheet, container, false)
         }
     }
-}
+        }
