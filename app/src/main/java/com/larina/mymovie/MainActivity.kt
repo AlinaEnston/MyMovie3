@@ -40,7 +40,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.favorites -> {
-                    Toast.makeText(this, "Избранное", Toast.LENGTH_SHORT).show()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_placeholder, FavoritesFragment())
+                        .addToBackStack(null)
+                        .commit()
                     true
                 }
                 R.id.watch_later -> {
@@ -55,6 +59,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Устанавливаем начальный фрагмент
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_placeholder, HomeFragment())
             .commit()
@@ -88,8 +93,8 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
             .setCancelable(true)
-
     }
+
     fun launchDetailsFragment(film: Film) {
         val detailsFragment = DetailsFragment()
         val bundle = Bundle()
@@ -102,4 +107,3 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 }
-

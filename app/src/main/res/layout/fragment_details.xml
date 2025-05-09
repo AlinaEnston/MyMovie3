@@ -46,15 +46,15 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/details_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/color3"
-        android:contentDescription="TODO"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|right"
-        android:src="@android:drawable/ic_menu_share"
-        android:tint="@android:color/white" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:backgroundTint="@color/color3"
+    android:contentDescription="TODO"
+    app:layout_anchor="@id/app_bar"
+    app:layout_anchorGravity="bottom|right"
+    android:src="@android:drawable/ic_menu_share"
+    android:tint="@android:color/white" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -63,12 +63,23 @@
 
         <TextView
             android:id="@+id/details_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            tools:text="@tools:sample/lorem/random" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        tools:text="@tools:sample/lorem/random" />
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/details_fab_favorites"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:borderWidth="0dp"
+    android:backgroundTint="@color/color4"
+    app:layout_anchor="@id/app_bar"
+    app:layout_anchorGravity="left|bottom"
+    app:srcCompat="@drawable/icons6"
+    app:tint="@color/white"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

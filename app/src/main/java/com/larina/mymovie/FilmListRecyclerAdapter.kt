@@ -52,4 +52,6 @@ class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : Recyc
         films.addAll(newFilms)
         notifyDataSetChanged()
     }
+
+    fun add(films: List<Film>) {}
 }
