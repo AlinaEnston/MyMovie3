@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.larina.mymovie.Film
 import com.larina.mymovie.R
 
-class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<FilmListRecyclerAdapter.FilmViewHolder>() {
-
-    private val films = mutableListOf<Film>()
+class FilmListRecyclerAdapter(
+    private var filmsList: MutableList<Film>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<FilmListRecyclerAdapter.FilmViewHolder>() {
 
     interface OnItemClickListener {
         fun click(film: Film)
@@ -21,12 +22,10 @@ class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : Recyc
         private val description: TextView = itemView.findViewById(R.id.description)
 
         fun bind(film: Film) {
-            // Убедитесь, что posterResId - это Int
             poster.setImageResource(film.poster)
             title.text = film.title
             description.text = film.description
 
-            // Обработка нажатия на элемент
             itemView.setOnClickListener {
                 listener.click(film)
             }
@@ -39,19 +38,22 @@ class FilmListRecyclerAdapter(private val listener: OnItemClickListener) : Recyc
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
-        // Передаем элемент в метод bind() ViewHolder
-        holder.bind(films[position])
+        holder.bind(filmsList[position])
     }
 
-    override fun getItemCount(): Int {
-        return films.size
-    }
+    override fun getItemCount(): Int = filmsList.size
 
+    // Метод для добавления элементов
     fun addItems(newFilms: List<Film>) {
-        films.clear()
-        films.addAll(newFilms)
+        filmsList.clear()
+        filmsList.addAll(newFilms)
         notifyDataSetChanged()
     }
 
-    fun add(films: List<Film>) {}
+    // Метод для обновления данных
+    fun updateData(newList: List<Film>) {
+        filmsList.clear()
+        filmsList.addAll(newList)
+        notifyDataSetChanged()
+    }
 }

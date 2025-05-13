@@ -13,6 +13,7 @@ class FavoritesFragment : Fragment() {
 
     private lateinit var favoritesRecycler: RecyclerView
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
+    private lateinit var favoritesDatabaseHelper: FavoritesDatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,26 +25,32 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        favoritesDatabaseHelper = FavoritesDatabaseHelper(requireContext())
         favoritesRecycler = view.findViewById(R.id.favorites_recycler)
 
-        // Инициализация адаптера с передачей слушателя кликов
-        filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
+        // Получите список избранных фильмов из базы данных
+        val favoriteFilmsList = favoritesDatabaseHelper.getAllFavorites()
+
+        // Инициализируйте адаптер с полученным списком и слушателем кликов
+        filmsAdapter = FilmListRecyclerAdapter(favoriteFilmsList.toMutableList(), object : FilmListRecyclerAdapter.OnItemClickListener {
             override fun click(film: Film) {
                 (requireActivity() as MainActivity).launchDetailsFragment(film)
             }
         })
 
+        // Настройте RecyclerView
         favoritesRecycler.apply {
             adapter = filmsAdapter
             layoutManager = LinearLayoutManager(requireContext())
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
         }
+    }
 
-        // Получаем или формируем список фильмов
-        val favoritesList: List<Film> = emptyList() // Замените на реальные данные
-
-        // Передаем список в адаптер через метод (например, add, submitList или setFilms)
-        filmsAdapter.add(favoritesList)
+    override fun onResume() {
+        super.onResume()
+        // Обновите данные при возвращении в фрагмент
+        val updatedList = favoritesDatabaseHelper.getAllFavorites()
+        filmsAdapter.updateData(updatedList)
     }
 }
