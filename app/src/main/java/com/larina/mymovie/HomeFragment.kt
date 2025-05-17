@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.appcompat.widget.SearchView // Не забудьте импортировать SearchView
 
 class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
+    private lateinit var searchView: SearchView // Объявляем переменную для SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +25,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.main_recycler)
+        searchView = view.findViewById(R.id.search_view) // Инициализируем SearchView
 
         // Инициализация адаптера с передачей слушателя кликов
         filmsAdapter = FilmListRecyclerAdapter(mutableListOf(), object : FilmListRecyclerAdapter.OnItemClickListener {
@@ -42,7 +45,7 @@ class HomeFragment : Fragment() {
             Film("Aladdin", R.drawable.poster_8, "Aladdin, a kind thief, woos Jasmine, the princess of Agrabah, with the help of Genie. When Jafar, the grand vizier, tries to usurp the king, Jasmine, Aladdin and Genie must stop him from succeeding."),
             Film("Why Women Kill", R.drawable.poster_7, "An anthology series that follows three women in different decades all living in the same house, as they deal with infidelity and betrayals in their marriages."),
             Film("Le fabuleux destin d'Amélie Poulain", R.drawable.poster_6, "Despite being caught in her imaginative world, young waitress Amelie decides to help people find happiness. Her quest to spread joy leads her on a journey during which she finds true love."),
-            Film("Luck", R.drawable.poster_5, " The curtain is pulled back on the millennia-old battle between the organizations of good luck and bad luck that secretly affects everyday lives."),
+            Film("Luck", R.drawable.poster_5, "The curtain is pulled back on the millennia-old battle between the organizations of good luck and bad luck that secretly affects everyday lives."),
             Film("Wicked", R.drawable.poster_4, "Elphaba, a young woman ridiculed for her green skin, and Galinda, a popular girl, become friends at Shiz University in the Land of Oz. After an encounter with the Wonderful Wizard of Oz, their friendship reaches a crossroads."),
             Film("W.I.T.C.H", R.drawable.poster_3, "Five teenage girls learn that they have been chosen to guard the walls between parallel universes. For this purpose, they have been given the powers of the elements."),
             Film("Paddington", R.drawable.poster_10, "A young Peruvian bear travels to London in search of a home. Finding himself lost and alone at Paddington Station, he meets the kindly Brown family, who offer him a temporary haven."),
@@ -51,6 +54,11 @@ class HomeFragment : Fragment() {
 
         // Передаем данные в адаптер
         filmsAdapter.addItems(filmsDataBase)
+
+        // Обработчик клика для SearchView
+        searchView.setOnClickListener {
+            searchView.isIconified = false // Разворачиваем SearchView
+        }
     }
 
     class YourBottomSheetFragment : BottomSheetDialogFragment() {
