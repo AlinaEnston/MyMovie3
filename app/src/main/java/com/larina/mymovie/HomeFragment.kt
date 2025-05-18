@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.SearchView
+import java.util.Locale
 
 class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
@@ -59,8 +60,7 @@ class HomeFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                // Обработка нажатия кнопки поиска (можно реализовать логику поиска или скрыть клавиатуру)
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -76,7 +76,6 @@ class HomeFragment : Fragment() {
                 filmsAdapter.updateData(filteredList)
                 return true
             }
-
         })
     }
 }
