@@ -17,7 +17,7 @@
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/search"
             app:layout_scrollFlags="scroll|enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
