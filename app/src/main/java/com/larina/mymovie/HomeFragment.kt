@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         recyclerView = view.findViewById(R.id.main_recycler)
         searchView = view.findViewById(R.id.search_view)
 

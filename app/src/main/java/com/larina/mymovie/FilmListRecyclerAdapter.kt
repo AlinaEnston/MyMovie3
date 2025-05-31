@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.larina.mymovie.Film
 import com.larina.mymovie.R
 
@@ -22,7 +23,14 @@ class FilmListRecyclerAdapter(
         private val description: TextView = itemView.findViewById(R.id.description)
 
         fun bind(film: Film) {
-            poster.setImageResource(film.poster)
+            //Указываем контейнер, в котором будет "жить" наша картинка
+            Glide.with(itemView)
+                //Загружаем сам ресурс
+                .load(film.poster)
+                //Центруем изображение
+                .centerCrop()
+                //Указываем ImageView, куда будем загружать изображение
+                .into(poster)
             title.text = film.title
             description.text = film.description
 
