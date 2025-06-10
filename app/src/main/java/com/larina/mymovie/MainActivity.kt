@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+
         }
 
         // Устанавливаем начальный фрагмент

@@ -7,61 +7,53 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.larina.mymovie.Film
 import com.larina.mymovie.R
+import com.larina.mymovie.RatingDonutView
+import com.larina.mymovie.databinding.FilmItemBinding
 
-class FilmListRecyclerAdapter(
-    private var filmsList: MutableList<Film>,
-    private val listener: OnItemClickListener
-) : RecyclerView.Adapter<FilmListRecyclerAdapter.FilmViewHolder>() {
+class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListener) :
+    RecyclerView.Adapter<FilmViewHolder>() {
+
+    private var films: MutableList<Film> = mutableListOf()
 
     interface OnItemClickListener {
         fun click(film: Film)
     }
 
-    class FilmViewHolder(itemView: View, private val listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
-        private val poster: ImageView = itemView.findViewById(R.id.poster)
-        private val title: TextView = itemView.findViewById(R.id.title)
-        private val description: TextView = itemView.findViewById(R.id.description)
-
-        fun bind(film: Film) {
-            //Указываем контейнер, в котором будет "жить" наша картинка
-            Glide.with(itemView)
-                //Загружаем сам ресурс
-                .load(film.poster)
-                //Центруем изображение
-                .centerCrop()
-                //Указываем ImageView, куда будем загружать изображение
-                .into(poster)
-            title.text = film.title
-            description.text = film.description
-
-            itemView.setOnClickListener {
-                listener.click(film)
-            }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false)
-        return FilmViewHolder(view, listener)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = FilmItemBinding.inflate(inflater, parent, false)
+        return FilmViewHolder(binding, onItemClickListener) // Pass the listener
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
-        holder.bind(filmsList[position])
+        holder.bind(films[position])
     }
 
-    override fun getItemCount(): Int = filmsList.size
+    override fun getItemCount(): Int = films.size
 
-    // Метод для добавления элементов
-    fun addItems(newFilms: List<Film>) {
-        filmsList.clear()
-        filmsList.addAll(newFilms)
-        notifyDataSetChanged()
-    }
-
-    // Метод для обновления данных
-    fun updateData(newList: List<Film>) {
-        filmsList.clear()
-        filmsList.addAll(newList)
+    // Method to update the data (replaces the entire list)
+    fun updateData(newFilms: List<Film>) {
+        films.clear()
+        films.addAll(newFilms)
         notifyDataSetChanged()
     }
 }
+
+
+class FilmViewHolder(private val binding: FilmItemBinding, private val onItemClickListener: FilmListRecyclerAdapter.OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(film: Film) {
+        binding.title.text = film.title
+        Glide.with(binding.root)
+            .load(film.poster)
+            .centerCrop()
+            .into(binding.poster)
+        binding.description.text = film.description
+        binding.ratingDonut.setProgress((film.rating * 10).toInt())
+        itemView.setOnClickListener {
+            onItemClickListener.click(film)
+        }
+    }
+}
+
+private fun RatingDonutView.setProgress(i: Int) {}

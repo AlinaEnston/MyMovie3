@@ -69,4 +69,3 @@ class FavoritesDatabaseHelper(context: Context) : SQLiteOpenHelper(context, "fav
         return films
     }
 }
-

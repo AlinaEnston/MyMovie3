@@ -31,8 +31,8 @@ class FavoritesFragment : Fragment() {
         // Получите список избранных фильмов из базы данных
         val favoriteFilmsList = favoritesDatabaseHelper.getAllFavorites()
 
-        // Инициализируйте адаптер с полученным списком и слушателем кликов
-        filmsAdapter = FilmListRecyclerAdapter(favoriteFilmsList.toMutableList(), object : FilmListRecyclerAdapter.OnItemClickListener {
+        // Инициализируйте адаптер с слушателем кликов (NO DATA HERE!)
+        filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
             override fun click(film: Film) {
                 (requireActivity() as MainActivity).launchDetailsFragment(film)
             }
@@ -45,6 +45,9 @@ class FavoritesFragment : Fragment() {
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
         }
+
+        // Set the data on the adapter AFTER creating it
+        filmsAdapter.updateData(favoriteFilmsList)
     }
 
     override fun onResume() {
