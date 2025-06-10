@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <com.larina.mymovie.RatingDonutView
-        android:id="@+id/rating_donut"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:translationZ="11dp"
-        app:stroke="10"
-        app:progress="77"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp" />
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -34,8 +24,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="411dp"
+        android:layout_height="704dp"
         android:layout_margin="8dp"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
