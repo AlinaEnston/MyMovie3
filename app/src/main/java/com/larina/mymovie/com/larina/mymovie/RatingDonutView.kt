@@ -23,9 +23,8 @@ class RatingDonutView @JvmOverloads constructor(
     private var centerY: Float = 0f
 
     // Толщина линии прогресса
-    private var stroke = 10f
+    private var stroke = 5f
 
-    // Значение прогресса от 0 - 100
     var progress: Int = 50
         set(value) {
             field = value.coerceIn(0, 100)
@@ -72,11 +71,11 @@ class RatingDonutView @JvmOverloads constructor(
         digitPaint.apply {
             style = Paint.Style.FILL_AND_STROKE
             strokeWidth = 2f
-            setShadowLayer(5f, 0f, 0f, Color.DKGRAY)
+            setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
             textSize = scaleSize
             typeface = Typeface.SANS_SERIF
             textAlign = Paint.Align.CENTER
-            color = getPaintColor(progress)
+            color = Color.WHITE
         }
         // Краска для заднего фона
         circlePaint.apply {
@@ -99,20 +98,15 @@ class RatingDonutView @JvmOverloads constructor(
         digitPaint.color = color
     }
 
-    // Конвертирую прогресс (0–100) в градусы (0–360)
+    // Конвертируем прогресс (0–100) в градусы (0–360)
     private fun convertProgressToDegrees(progress: Int): Float = progress * 3.6f
-
-
-    fun progress(progressValue: Int) {
-        progress = progressValue
-    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         radius = if (w > h) {
-            h.div(2f)
+            h / 2f
         } else {
-            w.div(2f)
+            w / 2f
         }
         centerX = w / 2f
         centerY = h / 2f
@@ -129,13 +123,13 @@ class RatingDonutView @JvmOverloads constructor(
         val chosenHeight = chooseDimension(heightMode, heightSize)
 
         val minSide = Math.min(chosenWidth, chosenHeight)
-        centerX = minSide.div(2f)
-        centerY = minSide.div(2f)
+        centerX = minSide / 2f
+        centerY = minSide / 2f
 
         setMeasuredDimension(minSide, minSide)
     }
 
-    private fun chooseDimension(mode: Int, size: Int) =
+    private fun chooseDimension(mode: Int, size: Int): Int =
         when (mode) {
             MeasureSpec.AT_MOST, MeasureSpec.EXACTLY -> size
             else -> 300
@@ -145,7 +139,7 @@ class RatingDonutView @JvmOverloads constructor(
         val scale = radius * 0.8f
         canvas.save()
         canvas.translate(centerX, centerY)
-        oval.set(0f - scale, 0f - scale, scale, scale)
+        oval.set(-scale, -scale, scale, scale)
         canvas.drawCircle(0f, 0f, radius, circlePaint)
         canvas.drawArc(oval, -90f, convertProgressToDegrees(progress), false, strokePaint)
         canvas.restore()
@@ -156,7 +150,9 @@ class RatingDonutView @JvmOverloads constructor(
         val widths = FloatArray(message.length)
         digitPaint.getTextWidths(message, widths)
         var advance = 0f
-        for (width in widths) advance += width
+        for (width in widths) {
+            advance += width
+        }
         canvas.drawText(message, 0f - advance / 2, 0f + digitPaint.textSize / 4, digitPaint)
     }
 
