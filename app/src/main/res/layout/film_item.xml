@@ -53,11 +53,11 @@
 
     <com.larina.mymovie.RatingDonutView
         android:id="@+id/rating_donut"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="97dp"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom|left"
         android:translationZ="11dp"
-        app:stroke="10"
         app:progress="77"
-        android:layout_gravity="bottom|left" />
+        app:stroke="10" />
 
 </FrameLayout>

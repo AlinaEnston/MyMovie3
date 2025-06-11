@@ -14,16 +14,11 @@ class RatingDonutView @JvmOverloads constructor(
     attributeSet: AttributeSet? = null
 ) : View(context, attributeSet) {
 
-    // Овал для рисования сегментов прогресс бара
     private val oval = RectF()
-
-    // Координаты центра View, а также Radius
     private var radius: Float = 0f
     private var centerX: Float = 0f
     private var centerY: Float = 0f
-
-    // Толщина линии прогресса
-    private var stroke = 5f
+    private var stroke = 10f
 
     var progress: Int = 50
         set(value) {
@@ -32,16 +27,13 @@ class RatingDonutView @JvmOverloads constructor(
             invalidate()
         }
 
-    // Значения размера текста внутри кольца
     private var scaleSize = 60f
 
-    // Краски для наших фигур
     private var strokePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var digitPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var circlePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     init {
-        // Получаем атрибуты и устанавливаем их в соответствующие поля
         val a = context.theme.obtainStyledAttributes(
             attributeSet,
             R.styleable.RatingDonutView,
@@ -54,20 +46,16 @@ class RatingDonutView @JvmOverloads constructor(
         } finally {
             a.recycle()
         }
-
-        // Инициализируем первоначальные краски
         initPaint()
     }
 
     private fun initPaint() {
-        // Краска для колец
         strokePaint.apply {
             style = Paint.Style.STROKE
             strokeWidth = stroke
             color = getPaintColor(progress)
             strokeCap = Paint.Cap.ROUND
         }
-        // Краска для цифр
         digitPaint.apply {
             style = Paint.Style.FILL_AND_STROKE
             strokeWidth = 2f
@@ -75,39 +63,31 @@ class RatingDonutView @JvmOverloads constructor(
             textSize = scaleSize
             typeface = Typeface.SANS_SERIF
             textAlign = Paint.Align.CENTER
-            color = Color.WHITE
+            color = Color.GREEN  // Set text color to green
         }
-        // Краска для заднего фона
         circlePaint.apply {
             style = Paint.Style.FILL
-            color = Color.DKGRAY
+            color = Color.BLACK  // Set background color to black
         }
     }
 
-    // Определение цвета в зависимости от прогресса
     private fun getPaintColor(progress: Int): Int = when (progress) {
         in 0..25 -> Color.parseColor("#4B0082")
         in 26..50 -> Color.parseColor("#9400D3")
         in 51..75 -> Color.parseColor("#9ACD32")
-        else -> Color.parseColor("#00FF00")
+        else -> Color.parseColor("#00BFFF")
     }
 
     private fun updatePaintColors() {
         val color = getPaintColor(progress)
         strokePaint.color = color
-        digitPaint.color = color
     }
 
-    // Конвертируем прогресс (0–100) в градусы (0–360)
     private fun convertProgressToDegrees(progress: Int): Float = progress * 3.6f
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        radius = if (w > h) {
-            h / 2f
-        } else {
-            w / 2f
-        }
+        radius = if (w > h) h / 2f else w / 2f
         centerX = w / 2f
         centerY = h / 2f
     }
@@ -115,7 +95,6 @@ class RatingDonutView @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
 
@@ -129,11 +108,12 @@ class RatingDonutView @JvmOverloads constructor(
         setMeasuredDimension(minSide, minSide)
     }
 
-    private fun chooseDimension(mode: Int, size: Int): Int =
-        when (mode) {
+    private fun chooseDimension(mode: Int, size: Int): Int {
+        return when (mode) {
             MeasureSpec.AT_MOST, MeasureSpec.EXACTLY -> size
             else -> 300
         }
+    }
 
     private fun drawRating(canvas: Canvas) {
         val scale = radius * 0.8f
@@ -147,13 +127,15 @@ class RatingDonutView @JvmOverloads constructor(
 
     private fun drawText(canvas: Canvas) {
         val message = String.format("%.1f", progress / 10f)
-        val widths = FloatArray(message.length)
-        digitPaint.getTextWidths(message, widths)
-        var advance = 0f
-        for (width in widths) {
-            advance += width
-        }
-        canvas.drawText(message, 0f - advance / 2, 0f + digitPaint.textSize / 4, digitPaint)
+        val fm = digitPaint.fontMetrics
+        val textHeight = fm.descent - fm.ascent
+        val textVerticalOffset = textHeight / 2 - fm.descent
+
+        canvas.save()
+        canvas.translate(centerX, centerY)
+        // Draw the text centered horizontally and vertically
+        canvas.drawText(message, 0f, textVerticalOffset, digitPaint)
+        canvas.restore()
     }
 
     override fun onDraw(canvas: Canvas) {
