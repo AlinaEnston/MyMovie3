@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#7755E7"
-    app:itemIconTint="@android:color/white"
+    app:itemIconTint="@color/white"
     app:itemTextColor="@color/white"
     app:labelVisibilityMode="labeled"
     app:layout_constraintBottom_toBottomOf="parent"

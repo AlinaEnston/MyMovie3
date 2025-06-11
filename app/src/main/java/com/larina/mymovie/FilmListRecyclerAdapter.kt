@@ -4,11 +4,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.larina.mymovie.Film
 import com.larina.mymovie.databinding.FilmItemBinding
-import com.larina.mymovie.RatingDonutView
 
-
-class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListener) :
-    RecyclerView.Adapter<FilmViewHolder>() {
+class FilmListRecyclerAdapter(
+    private val onItemClickListener: OnItemClickListener
+) : RecyclerView.Adapter<FilmViewHolder>() {
 
     private var films: MutableList<Film> = mutableListOf()
 
@@ -17,8 +16,7 @@ class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListen
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = FilmItemBinding.inflate(inflater, parent, false)
+        val binding = FilmItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FilmViewHolder(binding, onItemClickListener)
     }
 
@@ -34,6 +32,7 @@ class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListen
         notifyDataSetChanged()
     }
 }
+
 
 class FilmViewHolder(
     private val binding: FilmItemBinding,
