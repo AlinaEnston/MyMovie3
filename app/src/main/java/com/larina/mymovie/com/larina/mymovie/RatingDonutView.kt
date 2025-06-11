@@ -8,7 +8,6 @@ import android.graphics.RectF
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
-import com.larina.mymovie.R  // Import your R file
 
 class RatingDonutView @JvmOverloads constructor(
     context: Context,
@@ -29,24 +28,24 @@ class RatingDonutView @JvmOverloads constructor(
     // Значение прогресса от 0 - 100
     var progress: Int = 50
         set(value) {
-            field = value.coerceIn(0, 100) // Ensure progress is within 0-100
-            updatePaintColors() // Update paint colors when progress changes
-            invalidate() // Redraw the view
+            field = value.coerceIn(0, 100)
+            updatePaintColors()
+            invalidate()
         }
 
     // Значения размера текста внутри кольца
     private var scaleSize = 60f
 
     // Краски для наших фигур
-    private var strokePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG) // Initialize with default value
-    private var digitPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)  // Initialize with default value
-    private var circlePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG) // Initialize with default value
+    private var strokePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var digitPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var circlePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     init {
         // Получаем атрибуты и устанавливаем их в соответствующие поля
         val a = context.theme.obtainStyledAttributes(
             attributeSet,
-            R.styleable.RatingDonutView, // Use your R.styleable
+            R.styleable.RatingDonutView,
             0,
             0
         )
@@ -65,21 +64,18 @@ class RatingDonutView @JvmOverloads constructor(
         // Краска для колец
         strokePaint.apply {
             style = Paint.Style.STROKE
-            // Сюда кладем значение из поля класса, потому как у нас краски будут видоизменяться
             strokeWidth = stroke
-            // Цвет мы тоже будем получать в специальном методе, потому что в зависимости от рейтинга
-            // мы будем менять цвет нашего кольца
             color = getPaintColor(progress)
-            strokeCap = Paint.Cap.ROUND // Add rounded corners to the stroke
+            strokeCap = Paint.Cap.ROUND
         }
         // Краска для цифр
         digitPaint.apply {
             style = Paint.Style.FILL_AND_STROKE
-            strokeWidth = 2f // Consider making this configurable
+            strokeWidth = 2f
             setShadowLayer(5f, 0f, 0f, Color.DKGRAY)
             textSize = scaleSize
             typeface = Typeface.SANS_SERIF
-            textAlign = Paint.Align.CENTER // Center the text horizontally
+            textAlign = Paint.Align.CENTER
             color = getPaintColor(progress)
         }
         // Краска для заднего фона
@@ -105,6 +101,11 @@ class RatingDonutView @JvmOverloads constructor(
 
     // Конвертирую прогресс (0–100) в градусы (0–360)
     private fun convertProgressToDegrees(progress: Int): Float = progress * 3.6f
+
+
+    fun progress(progressValue: Int) {
+        progress = progressValue
+    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -141,39 +142,26 @@ class RatingDonutView @JvmOverloads constructor(
         }
 
     private fun drawRating(canvas: Canvas) {
-        // Здесь мы можем регулировать размер нашего кольца
         val scale = radius * 0.8f
-        // Сохраняем канвас
         canvas.save()
-        // Перемещаем нулевые координаты канваса в центр, вы помните, так проще рисовать все круглое
         canvas.translate(centerX, centerY)
-        // Устанавливаем размеры под наш овал
         oval.set(0f - scale, 0f - scale, scale, scale)
-        // Рисуем задний фон(Желательно его отрисовать один раз в bitmap, так как он статичный)
         canvas.drawCircle(0f, 0f, radius, circlePaint)
-        // Рисуем "арки", из них и будет состоять наше кольцо + у нас тут специальный метод
         canvas.drawArc(oval, -90f, convertProgressToDegrees(progress), false, strokePaint)
-        // Восстанавливаем канвас
         canvas.restore()
     }
 
     private fun drawText(canvas: Canvas) {
-        // Форматируем текст, чтобы мы выводили дробное число с одной цифрой после точки
         val message = String.format("%.1f", progress / 10f)
-        // Получаем ширину и высоту текста, чтобы компенсировать их при отрисовке, чтобы текст был
-        // точно в центре
         val widths = FloatArray(message.length)
         digitPaint.getTextWidths(message, widths)
         var advance = 0f
         for (width in widths) advance += width
-        // Рисуем наш текст
         canvas.drawText(message, 0f - advance / 2, 0f + digitPaint.textSize / 4, digitPaint)
     }
 
     override fun onDraw(canvas: Canvas) {
-        // Рисуем кольцо и задний фон
         drawRating(canvas)
-        // Рисуем цифры
         drawText(canvas)
     }
 }

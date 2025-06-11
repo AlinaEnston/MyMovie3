@@ -1,14 +1,11 @@
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.larina.mymovie.Film
-import com.larina.mymovie.R
-import com.larina.mymovie.RatingDonutView
 import com.larina.mymovie.databinding.FilmItemBinding
+import com.larina.mymovie.RatingDonutView
+
 
 class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListener) :
     RecyclerView.Adapter<FilmViewHolder>() {
@@ -22,7 +19,7 @@ class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListen
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = FilmItemBinding.inflate(inflater, parent, false)
-        return FilmViewHolder(binding, onItemClickListener) // Pass the listener
+        return FilmViewHolder(binding, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
@@ -31,7 +28,6 @@ class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListen
 
     override fun getItemCount(): Int = films.size
 
-    // Method to update the data (replaces the entire list)
     fun updateData(newFilms: List<Film>) {
         films.clear()
         films.addAll(newFilms)
@@ -39,8 +35,10 @@ class FilmListRecyclerAdapter(private val onItemClickListener: OnItemClickListen
     }
 }
 
-
-class FilmViewHolder(private val binding: FilmItemBinding, private val onItemClickListener: FilmListRecyclerAdapter.OnItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+class FilmViewHolder(
+    private val binding: FilmItemBinding,
+    private val onItemClickListener: FilmListRecyclerAdapter.OnItemClickListener
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(film: Film) {
         binding.title.text = film.title
@@ -49,11 +47,12 @@ class FilmViewHolder(private val binding: FilmItemBinding, private val onItemCli
             .centerCrop()
             .into(binding.poster)
         binding.description.text = film.description
-        binding.ratingDonut.setProgress((film.rating * 10).toInt())
+        binding.ratingDonut.progress = (film.rating * 10).toInt()
+
+
+        // Set the click listener for the item
         itemView.setOnClickListener {
             onItemClickListener.click(film)
         }
     }
 }
-
-private fun RatingDonutView.setProgress(i: Int) {}
