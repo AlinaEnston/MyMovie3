@@ -13,9 +13,12 @@
         android:theme="@style/Theme.MyMovie"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".DetailsFragment"
             android:exported="false" />
         <activity
+=======
+>>>>>>> aa8ce390169e0d983c36ab0787144729478f637e
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

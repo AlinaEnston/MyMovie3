@@ -4,6 +4,15 @@
 
 
     <item
+<<<<<<< HEAD
+=======
+        android:id="@+id/search"
+        android:icon="@drawable/icons7"
+        android:title="Поиск"
+        app:showAsAction="ifRoom" />
+
+    <item
+>>>>>>> aa8ce390169e0d983c36ab0787144729478f637e
         android:id="@+id/more"
         android:title="More"
         app:showAsAction="withText" />
